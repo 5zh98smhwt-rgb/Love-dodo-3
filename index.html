@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💘 دودو 💘</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+background:linear-gradient(135deg,#ff8fb1,#ffd1e8);
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+color:white;
+}
+
+.page{
+text-align:center;
+z-index:2;
+}
+
+h1{
+font-size:3rem;
+margin-bottom:10px;
+text-shadow:0 0 15px rgba(255,255,255,0.8);
+}
+
+h2{
+font-size:1.8rem;
+margin:10px 0;
+}
+
+.buttons{
+margin-top:20px;
+position:relative;
+height:160px;
+}
+
+button{
+padding:12px 30px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+font-size:18px;
+transition:0.3s;
+}
+
+.yes{
+background:white;
+color:#ff4f8b;
+}
+
+.no{
+background:#ff4f8b;
+color:white;
+position:absolute;
+left:55%;
+top:0;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+.hidden{
+display:none;
+}
+
+/* العداد */
+#counter{
+font-size:1.5rem;
+margin-top:15px;
+}
+
+/* قلوب وورود */
+.flower{
+position:absolute;
+top:-50px;
+animation:fall linear forwards;
+pointer-events:none;
+}
+
+@keyframes fall{
+from{transform:translateY(-50px);opacity:1;}
+to{transform:translateY(110vh);opacity:0;}
+}
+
+/* زر الموسيقى */
+.music-btn{
+margin-top:20px;
+background:#ff4f8b;
+color:white;
+}
+</style>
+</head>
+
+<body>
+
+<!-- الصفحة الرئيسية -->
+<div id="home" class="page">
+<h1>💘 لرفيقة دربي دودو 💘</h1>
+<h2>بتحبيني؟ ❤️</h2>
+
+<div id="counter"></div>
+
+<div class="buttons">
+<button class="yes" onclick="showLove()">Yes 💖</button>
+<button id="noBtn" class="no">No 😔</button>
+</div>
+
+<a href="https://youtu.be/2tnAgz-juJc?si=IBY7LhOKn0BdsEKJ" target="_blank">
+<button class="music-btn">🎵 شغلي أغنيتنا 🎵</button>
+</a>
+</div>
+
+<!-- صفحة الحب -->
+<div id="love" class="page hidden">
+<h1>🌹 وأنا كمان بحبك! 💘</h1>
+<h2>أنتِ أجمل شيء بحياتي ❤️</h2>
+</div>
+
+<script>
+
+function showLove(){
+document.getElementById("home").classList.add("hidden");
+document.getElementById("love").classList.remove("hidden");
+}
+
+// زر No يهرب داخل الشاشة بدون ما يطلع برا
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("click", moveNo);
+
+function moveNo(){
+const btnWidth = noBtn.offsetWidth;
+const btnHeight = noBtn.offsetHeight;
+
+const maxX = window.innerWidth - btnWidth;
+const maxY = window.innerHeight - btnHeight;
+
+let x = Math.random() * maxX;
+let y = Math.random() * maxY;
+
+// يمنع الخروج من الشاشة
+x = Math.max(10, Math.min(x, maxX - 10));
+y = Math.max(10, Math.min(y, maxY - 10));
+
+noBtn.style.left = x + "px";
+noBtn.style.top = y + "px";
+}
+
+// العداد
+const startDate = new Date("2025-12-18T00:00:00");
+
+function updateCounter(){
+const now = new Date();
+const diff = now - startDate;
+
+const seconds = Math.floor(diff / 1000);
+const minutes = Math.floor(seconds / 60);
+const hours = Math.floor(minutes / 60);
+const days = Math.floor(hours / 24);
+
+document.getElementById("counter").innerHTML =
+"💞 من وقت ما عرفتك: " +
+days + " يوم | " +
+(hours % 24) + " ساعة | " +
+(minutes % 60) + " دقيقة | " +
+(seconds % 60) + " ثانية 💞";
+}
+
+setInterval(updateCounter,1000);
+updateCounter();
+
+// ورود متساقطة
+function createFlower(){
+const el = document.createElement("div");
+el.classList.add("flower");
+
+const arr = ["🌹","🌷","💐","🌸","💖"];
+el.innerHTML = arr[Math.floor(Math.random()*arr.length)];
+
+el.style.left = Math.random()*100 + "vw";
+el.style.fontSize = (20 + Math.random()*20) + "px";
+el.style.animationDuration = (4 + Math.random()*4) + "s";
+
+document.body.appendChild(el);
+
+setTimeout(()=>el.remove(),8000);
+}
+
+setInterval(createFlower,250);
+
+</script>
+
+</body>
+</html>
